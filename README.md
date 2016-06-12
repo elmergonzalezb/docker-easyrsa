@@ -23,11 +23,11 @@ easy-rsa build-key-server server.domain.name
 easy-rsa build-dh
 
 #export cert to local machine's web server
-easy-rsa cat db/keys/server.domain.name.crt | sudo tee /etc/nginx/ssl/some.domain.name.crt
-easy-rsa cat db/keys/server.domain.name.key | sudo tee /etc/nginx/ssl/some.domain.name.key
+easy-rsa cat keys/server.domain.name.crt > /etc/nginx/ssl/some.domain.name.crt
+easy-rsa cat keys/server.domain.name.key > /etc/nginx/ssl/some.domain.name.key
 
 #export CA's public key for clients' trusted CA stores
-easy-rsa cat db/keys/ca.crt | sudo tee ~/myCa.crt
+easy-rsa cat keys/ca.crt > ~/myCa.crt
 ```
 
 If there is no actual database on the mounted /pki directory, the container's
