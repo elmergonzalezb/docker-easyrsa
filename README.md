@@ -1,15 +1,34 @@
 # docker-easyrsa
 
-Container to abstract away easy-rsa. Mount a volume (or don't if you choose) to
- /pki and execute easy-rsa commands like so:
+Container to abstract and containerize easy-rsa. 
+
+Mostly for keeping clutter out of your filesystem, not have to deal with
+dependency nonsense on non-debian distros, and allowing you to keep 
+the root CA database filesystem encrypted, unmounted, and wherever you want it
+ (e.g. a flashdrive, an encrypted AWS EBS volume that's mostly detached, etc).
+
+Mount a volume (or don't if you choose) to /pki and execute easy-rsa commands 
+like so:
 
 ```bash
-docker run --rm -it 
-```
+alias easy-rsa="docker run --rm -it -v /a/safe/location:/pki tonymke/easy-rsa"
 
-Mostly for keeping clutter out of your filesystem, and allowing you to keep 
-the root CA database filesystem encrypted, unmounted, and wherever you want it
- (e.g. a flashdrive, an encrypted AWS EBS volume, etc).
+#create a new root CA
+easy-rsa build-ca
+
+#create a server cert (do not give a password)
+easy-rsa build-key-server server.domain.name
+
+#build Diffie-Hellman
+easy-rsa build-dh
+
+#export cert to local machine's web server
+easy-rsa cat db/keys/server.domain.name.crt | sudo tee /etc/nginx/ssl/some.domain.name.crt
+easy-rsa cat db/keys/server.domain.name.key | sudo tee /etc/nginx/ssl/some.domain.name.key
+
+#export CA's public key for clients' trusted CA stores
+easy-rsa cat db/keys/ca.crt | sudo tee ~/myCa.crt
+```
 
 If there is no actual database on the mounted /pki directory, the container's
 entrypoint script will create one lazily at runtime before running your
@@ -17,17 +36,20 @@ requested command.
 
 ## Status
 
-Wrapping up the init scripts now. Just gimme a second :)
+Working.
 
-## Handy Alias
+## VARS
 
-```bash
-alias easy-rsa="docker run --rm -it -v $EASY_RSA_DIR:/pki tonymke/docker-easyrsa"
-```
+easy-rsa uses a file to define its operating environment. This defines values 
+that go into your certificates. You need to customize this before generating 
+any certificates.
 
-## Common commands
+If no DB is detected, the entryscript will move a vars file from the root 
+of your mounted directory - if it exists - into the new database. Otherwise,
+it will simply use easy-rsa's default.
 
-_TODO_
+A sample vars file is included in this repo - _vars.default_ - 
+(easy-rsa's default).
 
 ## Author
 
@@ -35,4 +57,4 @@ _TODO_
 
 ## License
 
-whatever man.
+Whatever man.
