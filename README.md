@@ -36,7 +36,9 @@ requested command.
 
 ## Status
 
-Working.
+Working. 
+
+Added to public [docker hub](https://hub.docker.com/r/tonymke/easy-rsa/)
 
 ## VARS
 
