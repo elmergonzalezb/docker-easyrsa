@@ -2,7 +2,7 @@
 
 Container to abstract and containerize easy-rsa. 
 
-Mostly for keeping clutter out of your filesystem, not have to deal with
+Keep clutter out of your filesystem, not have to deal with
 dependency nonsense on non-debian distros, and allowing you to keep 
 the root CA database filesystem encrypted, unmounted, and wherever you want it
  (e.g. a flashdrive, an encrypted AWS EBS volume that's mostly detached, etc).
