@@ -59,4 +59,4 @@ A sample vars file is included in this repo - _vars.default_ -
 
 ## License
 
-Whatever man.
+MIT. See LICENSE for full text.
