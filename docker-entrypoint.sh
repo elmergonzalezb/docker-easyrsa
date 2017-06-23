@@ -28,6 +28,6 @@ fi
 PATH=$PATH:$PKI_DB_DIR
 cd $PKI_DB_DIR
 
-source $PKI_DB_DIR/vars
+source $PKI_DB_DIR/vars &> /dev/null
 
 "$TARGET" "$@"
