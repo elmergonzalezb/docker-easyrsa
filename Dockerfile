@@ -6,7 +6,7 @@ RUN apt-get update &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD ./docker-entrypoint.sh /
+COPY ./docker-entrypoint.sh /
 
 VOLUME /pki
 
