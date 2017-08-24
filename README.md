@@ -34,6 +34,33 @@ If there is no actual database on the mounted /pki directory, the container's
 entrypoint script will create one lazily at runtime before running your
 requested command.
 
+## Intermediary CAs
+
+There is a dedicated script for creating an intermediary CA's database from
+a root CA.
+
+Mount the original DB, plus a folder to serve as the new one. 
+
+```bash
+# create an initial CA
+docker run --rm -it \
+  -v /a/safe/location/root:/pki \
+  tonymke/easy-rsa build-ca
+
+# create an intermediate CA within the root DB
+docker run --rm -it \
+  -v /a/safe/location/root:/pki \
+  tonymke/easy-rsa build-inter ourIntermediateCa
+
+# split off the intermediate CA into its own PKI
+docker run --rm -it \
+  -v /a/safe/location/root:/rootpki \
+  -v /a/safe/location/ourIntermediateCa:/pki \
+  tonymke/easy-rsa inherit-inter /rootpki/db/keys ourIntermediateCa
+```
+
+You can now treat the intermediate CA as a separate PKI DB entirely
+
 ## Status
 
 Working. 
@@ -48,10 +75,9 @@ any certificates.
 
 If no DB is detected, the entryscript will move a vars file from the root 
 of your mounted directory - if it exists - into the new database. Otherwise,
-it will simply use easy-rsa's default.
+it will use a sane default one.
 
-A sample vars file is included in this repo - _vars.default_ - 
-(easy-rsa's default).
+The default vars file is included in this repo - _vars.default_.
 
 ## Author
 
