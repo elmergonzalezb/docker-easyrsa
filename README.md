@@ -4,14 +4,13 @@ Container to abstract and containerize easy-rsa.
 
 Keep clutter out of your filesystem, not have to deal with
 dependency nonsense on non-debian distros, and allowing you to keep 
-the root CA database filesystem encrypted, unmounted, and wherever you want it
- (e.g. a flashdrive, an encrypted AWS EBS volume that's mostly detached, etc).
+the root CA database filesystem encrypted, unmounted, and wherever you want it.
 
-Mount a volume (or don't if you choose) to /pki and execute easy-rsa commands 
+Mount a volume to /pki and execute easy-rsa commands 
 like so:
 
 ```bash
-alias easy-rsa="docker run --rm -it -v /a/safe/location:/pki tonymke/easy-rsa"
+alias easy-rsa="docker run --rm -it -v /a/safe/location:/pki tonymke/easy-rsa:1.0.4"
 
 #create a new root CA
 easy-rsa build-ca
@@ -78,6 +77,15 @@ of your mounted directory - if it exists - into the new database. Otherwise,
 it will use a sane default one.
 
 The default vars file is included in this repo - _vars.default_.
+
+## Notes
+
+This container uses the latest LTS version of ubuntu in which `easy-rsa(1)`
+works, 16.04. The package in Ubuntu 18.04 appears to still be in the 2.x branch
+(and broken), while upstream is well into 3.x.
+
+The 2.x release does not work with openssl 1.1 or greater - used by Ubuntu 18.04
+and beyond.
 
 ## Author
 

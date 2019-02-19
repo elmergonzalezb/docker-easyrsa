@@ -1,5 +1,5 @@
-FROM ubuntu:14.04
-MAINTAINER Tony Lechner <tony.lechner@gmail.com>
+FROM ubuntu:16.04
+LABEL maintainer="Tony Lechner <tony@tony-lechner.com>"
 
 RUN apt-get update &&\
     apt-get install -y easy-rsa &&\
@@ -7,7 +7,5 @@ RUN apt-get update &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY ./docker-entrypoint.sh /
-
-VOLUME /pki
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
