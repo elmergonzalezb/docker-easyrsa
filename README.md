@@ -93,4 +93,4 @@ and beyond.
 
 ## License
 
-MIT. See LICENSE for full text.
+[MIT Zero Attribution](https://spdx.org/licenses/MIT-0.html). See LICENSE for full text.
