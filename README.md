@@ -10,7 +10,7 @@ Mount a volume to /pki and execute easy-rsa commands
 like so:
 
 ```bash
-alias easy-rsa="docker run --rm -it -v /a/safe/location:/pki tonymke/easy-rsa:1.0.4"
+alias easy-rsa="docker run --rm -it -v /a/safe/location:/pki tonymke/easy-rsa:1.0.6"
 
 #create a new root CA
 easy-rsa build-ca
